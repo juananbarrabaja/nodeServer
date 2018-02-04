@@ -9,10 +9,23 @@ module.exports.createUser = (req, res) => {
 	User.create({ name: 'joaquin' }, function(err, doc) {
 		if (err) {
 			log.error('Error creating user');            
-			res.status(500).send('Finished');            
+			res.status(500).send('Error creating user');            
 		} else {
 			log.info(`User ${doc} was created sucessfully`);            
-			res.status(200).send('Finished');                        
+			res.status(200).send(`User ${doc} was created sucessfully`);                        
+		}
+	});
+};
+
+module.exports.getUsers = (req, res) => {
+	const { User } = require('../model/User');
+	const log = new Log('info');
+
+	User.find({}, function(err, docs) {
+		if (err) {
+			log.error('Error creating user');
+		} else {
+			res.status(200).send({ docs });                        
 		}
 	});
 };
