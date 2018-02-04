@@ -4,7 +4,7 @@ module.exports.helloWorld = (req, res) => res.send('Hello world!');
 
 module.exports.createUser = (req, res) => {
 	const log = new Log('info');
-	const { User } = require('../model/User');
+	const { User } = require('../model/mapping');
     
 	User.create({ name: 'joaquin' }, function(err, doc) {
 		if (err) {
@@ -18,7 +18,7 @@ module.exports.createUser = (req, res) => {
 };
 
 module.exports.getUsers = (req, res) => {
-	const { User } = require('../model/User');
+	const { User } = require('../model/mapping');
 	const log = new Log('info');
 
 	User.find({}, function(err, docs) {

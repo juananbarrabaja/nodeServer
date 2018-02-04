@@ -1,4 +1,1 @@
-module.exports = (app, mongoose) => {
-	require('./User')(app, mongoose);
-};
-  
+module.exports.User = require('./User').User;
