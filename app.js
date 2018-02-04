@@ -1,13 +1,25 @@
 const express = require('express');
-const router = require('./api/router');
-const app = express();
 const mongoose = require('mongoose');
 const Log = require('log');
-const log = new Log('info');
 
-const db = mongoose.createConnection('mongodb://localhost:27017/nodeJS');
-db.on('error', log.error.bind(console, 'mongoose connection error: '));
-db.once('open', () => log.info('Connected'));
+const router = require('./api/router');
+
+const log = new Log('info');
+const app = express();
+
+const db = mongoose.connect('mongodb://localhost:27017/nodeJS'); 
+
+mongoose.connection.on('connected', function () {  
+	log.info(`Mongoose default connection open to ${db}`);
+}); 
+
+mongoose.connection.on('error',function (err) {
+	log.error.bind(console, `mongoose connection error: ${err}`);
+}); 
+
+mongoose.connection.on('disconnected', function () {  
+	log.info('Mongoose default connection disconnected'); 
+});
 
 app.use(router);
 app.listen(3000, () => true);
